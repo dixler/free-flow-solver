@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./main.py < $1 > sat.out
+
+num_colors=$(cat sat.out | grep '^c' | awk '{ print $2 }')
+width=$(cat sat.out | grep '^c' | awk '{ print $3 }')
+
+cat sat.out | z3 -in -dimacs > sat.out.out
+./vis.py $num_colors $width < sat.out.out
